@@ -20,7 +20,7 @@ htvm_hook1 = function(code) {
     const helloRegex = /^\s*hello\s*$/gm;
 
     // We replace every line that matches this pattern with the new print statement.
-    const modifiedCode = code.replace(helloRegex, 'print("Hello, World!")');
+    const modifiedCode = code.replace(helloRegex, 'print("Hello from the HTVM Test Plugin!")');
 
     return modifiedCode;
 };

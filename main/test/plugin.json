@@ -1,11 +1,10 @@
 {
-  "name": "String Reverser & Build Stamper",
-  "version": "1.1.0",
+  "name": "Keyword Expander",
+  "version": "1.0.0",
   "author": "TheMaster1127",
-  "description": "Reverses strings with REVERSE_STRING(...) and adds a build timestamp to the end of the file.",
+  "description": "Expands the standalone keyword 'hello' into a print statement.",
   "main": "index.js",
   "hooks": [
-    "htvm_hook1",
-    "htvm_hook30"
+    "htvm_hook1"
   ]
 }

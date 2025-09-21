@@ -30,8 +30,7 @@ This demonstrates the power of `htvm_hook1`, which runs as a pre-processor on yo
 
 You can install this plugin through the **Plugin Manager** in the HT-IDE.
 
-1.  Open the Plugin Manager.
+1.  Click on the `Plugin` button.
 2.  Navigate to the "Marketplace" tab.
-3.  Find "Test Plugin" in the list and click "Install".
-4.  Go to the "Installed" tab, find "Test Plugin", and click "Activate".
-5.  The IDE will reload, and the plugin will be active.
+3.  Find "Test The Marketplace" plugin in the list and click "Install & Activate".
+4.  The IDE will reload, and the plugin will be active.

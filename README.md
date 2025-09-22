@@ -4,12 +4,6 @@ This is the official community hub for discovering, sharing, and installing plug
 
 ---
 
-## ⚠️ **WARNING: This is a Cutting-Edge, In-Development Feature** ⚠️
-
-> The HTVM Plugin API is a powerful but highly advanced feature. It is still under active development. Hooks may change, and the system is intended for developers who understand the core concepts of HTVM. Use at your own risk. This is a guide, not a guarantee.
-
----
-
 ## How to Contribute a Plugin
 
 Follow these steps to get your plugin added to the official marketplace.
@@ -54,10 +48,41 @@ This file is the "ID card" for your plugin. The IDE uses it to display your plug
   "name": "Keyword Expander",
   "version": "1.0.0",
   "author": "TheMaster1127",
-  "description": "Expands the standalone keyword 'hello' into a print statement.",
+  "description": "Expands the standalone keywords like 'hello' into a print statement.",
   "main": "index.js",
-  "hooks": ["htvm_hook1"]
+  "hooks": ["htvm_hook1, htvm_hook2, htvm_hook3"]
 }
+```
+
+### Example `index.js`
+
+This is where your logic lives. Your JavaScript code must redefine one or more of the global `htvm_hook...` functions.
+
+```javascript
+// This plugin redefines the global htvm_hook1, htvm_hook2 and htvm_hook3 functions.
+htvm_hook1 = function(code) {
+    // This regex finds any line containing ONLY the word "hello"
+    const helloRegex = /^\s*hello\s*$/gm;
+    // It replaces that line with a full HTVM print command.
+    const modifiedCode = code.replace(helloRegex, 'print("Hello from my plugin!")');
+    return modifiedCode;
+};
+
+htvm_hook2 = function(code) {
+    // This regex finds any line containing ONLY the word "hi"
+    const hiRegex = /^\s*hi\s*$/gm;
+    // It replaces that line with a full HTVM print command.
+    const modifiedCode = code.replace(hiRegex, 'print("Hi from my plugin!")');
+    return modifiedCode;
+};
+
+htvm_hook3 = function(code) {
+    // This regex finds any line containing ONLY the word "hey"
+    const heyRegex = /^\s*hey\s*$/gm;
+    // It replaces that line with a full HTVM print command.
+    const modifiedCode = code.replace(heyRegex, 'print("Hey from my plugin!")');
+    return modifiedCode;
+};
 ```
 
 ### Pro Tip: Developing Plugins *in* HTVM
@@ -68,13 +93,15 @@ You can write your plugin's logic in a `.htvm` file and then transpile it to Jav
 
 ## The Hook API
 
-The API consists of a series of "hooks"—globally available functions that the HTVM engine calls at specific points during the transpilation process. Your plugin works by replacing these empty default functions with your own logic.
+The API consists of a series of "hooks"—globally available functions that the HTVM engine calls at specific points during its transpilation pipeline. Your plugin works by redefining these empty default functions with your own logic. In the HTVM language created by TheMaster1127, `;` is used for comments and `:=` is used for assignment.
+
+**Plugin Error Handling:** If something goes wrong during transpilation, **blame the plugin first.** Disable your active plugin and try again. If the issue persists, then blame your code, then the HTVM engine. Hooks can introduce breaking changes, so be mindful.
 
 A YouTube video tutorial about this is coming soon!
 
 ### A Full Example: The Transformation Process
 
-To understand how hooks work, let's trace the "Keyword Expander" plugin from start to finish. In the HTVM language, we use `;` for comments and `:=` for assignment.
+To understand how hooks work, let's trace the "Keyword Expander" plugin from start to finish.
 
 **1. The Original HTVM Code**
 A user writes this code in the IDE:
@@ -90,7 +117,7 @@ print("The value is: " + x)
 ```
 
 **2. What the Hook Receives**
-The HTVM engine first processes strings, comments, and imports for security and stability. Then, it calls `htvm_hook1`. The code your plugin's hook actually receives will look like this, with strings replaced by placeholders:
+The HTVM engine first processes strings, comments, and imports. Then, it calls `htvm_hook1`. The code your plugin's hook actually receives will look like this, with strings replaced by placeholders:
 ```
 ;HTVM--cnavisdofbuvsesdivdidufg79wregwewaeosd8ges7dfdftuawdiHTVMv2yerheyziberlasduci6syiq--AA0AA
 var x := 10
@@ -109,12 +136,11 @@ htvm_hook1 = function(code) {
     return modifiedCode;
 };
 ```
-This logic finds the standalone `hello` on its onw line and replaces it.
+This logic finds the standalone `hello` on its own line and replaces it.
 
 **4. What the Hook Returns**
-The hook function returns the modified code back to the HTVM engine. Notice that the string placeholder from the original `print` statement is untouched.
+The hook function returns the modified code back to the HTVM engine.
 ```
-; This is a normal line
 ;HTVM--cnavisdofbuvsesdivdidufg79wregwewaeosd8ges7dfdftuawdiHTVMv2yerheyziberlasduci6syiq--AA0AA
 var x := 10
 ;HTVM--cnavisdofbuvsesdivdidufg79wregwewaeosd8ges7dfdftuawdiHTVMv2yerheyziberlasduci6syiq--AA1AA
@@ -126,12 +152,9 @@ print(ihuiuuhuuhtheidFor--asdsas--theuhturtyphoutr--AA1AA + x)
 **5. The Final Transpiled Result**
 The HTVM engine then completes its transpilation on this new code, correctly restoring the original string placeholder. The final JavaScript output is exactly what we want:
 ```javascript
-
-
 function print(value) {
     console.log(value)
 }
-
 
 async function main() {
     // This is a normal line
@@ -140,37 +163,63 @@ async function main() {
     print("Hello, World!");
     // This is another normal line
     print("The value is: " + x);
-
 }
 main();
 ```
 
-### Pro Tip: Developing Plugins *in* HTVM
-
-You can write your plugin's logic in a `.htvm` file and then transpile it to JavaScript. This allows you to leverage the full power of HTVM to create plugins for HTVM. Once you have the generated JavaScript, simply copy and paste it into your plugin's `index.js` file.
-
----
-
-## The Hook API
-
-The API consists of a series of "hooks"—globally available functions that the HTVM engine calls at specific points during the transpilation process. Your plugin works by replacing these empty default functions with your own logic.
-
-A YouTube video tutorial about this is coming soon!
-
 ### Available Hooks
 
-**For now, there is only one hook.** More will be added as the API matures.
+The hooks are called in numerical order. Here is a detailed breakdown of each available hook point:
 
-*   `htvm_hook1(code)`
-    *   **When it runs:** This hook runs **AFTER** the initial processing of strings, comments, imports, and programming blocks.
+*   `htvm_hook1(code)` **[Code → Code]**
+    *   **When:** Runs **AFTER** the initial processing of strings, comments, imports, and programming blocks.
     *   **What it does:** It receives the source code as a single string and must return a modified string. It is perfect for structural changes and token-based manipulations.
-    *   **CRITICAL WARNING:** At this stage, all literal strings in the code have been replaced with unique placeholders. The code you receive will look like this:
-        ```
-        my_text = REVERSE_STRING(ihuiuuhuuhtheidFor--asdsas--theuhturtyphoutr--AA1AA)
-        ```
-        Your plugin logic **cannot** operate on the content of strings. It can only operate on the surrounding code structure, keywords, and variable names.
+    *   **CRITICAL WARNING:** At this stage, all literal strings in the code have been replaced with unique placeholders.
 
-> More hooks will be added in the future. Stay tuned!
+*   `htvm_hook2(code)` **[Code → Code]**
+    *   **When:** Runs after `hook1` and after the engine has handled pattern matching (the `when` keyword).
+    *   **Use Case:** Ideal for transformations that need to happen after basic pattern matching is resolved but before more complex structures are parsed.
+
+*   `htvm_hook3(code)` **[Code → Code]**
+    *   **When:** Runs after `hook2` and before GUI and backend commands are processed.
+    *   **Use Case:** Useful for manipulating code before it's interpreted as a GUI or backend instruction.
+
+*   `htvm_hook4(code)` **[Code → Code]**
+    *   **When:** Runs after `hook3` but before the main transpilation loop begins. This is the last chance to modify the code block as a whole before it's broken down line-by-line.
+    *   **Use Case:** Final structural cleanups or complex, multi-line macro expansions.
+
+*   `htvm_hook5(code)` **[Code → Code]**
+    *   **When:** Runs right before the main line-by-line transpilation loop starts.
+    *   **Use Case:** Advanced manipulations that rely on the entire code block being in its near-final state.
+
+*   `htvm_hook6(code)` **[Code → Code]**
+    *   **When:** Runs immediately before the very first line of the main transpilation loop.
+    *   **Use Case:** Injecting setup code or headers at the top of the script's logic.
+
+*   `htvm_hook7(code)` **[Code → Code]**
+    *   **When:** Runs at a specific point in the transpilation pipeline where string replacement is safe and effective.
+    *   **Use Case:** This is the ideal hook for safe string manipulations or transformations that require a partially-processed code state.
+
+*   `htvm_hook8(code)` **[Code → Code]**
+    *   **When:** Runs right before the original string values are restored from their placeholders.
+    *   **Use Case:** A last-chance hook to interact with the code while it still has placeholders. Useful for logic that analyzes code structure without being confused by complex string content.
+
+*   `htvm_hook9(finalCode)` **[Code → Code]**
+    *   **When:** A **DANGEROUS** hook. Runs **LAST**, after all transpilation is complete and all string placeholders have been restored. The `finalCode` is the almost-finished product.
+    *   **Use Case:** Post-processing the fully generated code, such as adding banners, comments, or performing final cleanup.
+
+*   `htvm_hook10("")` **[nothing BUT adding extra Build-in funcs]**
+    *   **When:** Runs after the instruction file has been parsed and before it's used by the compiler.
+    *   **Receives:** Nothing.
+    *   **Returns:** A string with New Build-In functions. Read more on how to structure them here: [Adding Built-in Functions](https://github.com/TheMaster1127/HTVM?tab=readme-ov-file#-adding-built-in-functions).
+    *   **Use Case:** Adding new built-in functions.
+
+*   `htvm_hook11(code)` **[Code → Code]**
+    *   **When:** A **DANGEROUS** hook. It runs **FIRST**, before absolutely everything, including the string protector.
+    *   **Receives:** The raw, untouched user source code.
+    *   **Returns:** A modified `string`.
+    *   **Use Case:** The ultimate pre-processor. This hook can perform raw text replacements on the original file, including string content.
+    *   **EXTREME WARNING:** This hook is incredibly powerful and dangerous. Logic here can easily break the compiler if it's not written carefully. It is highly recommended to use other hooks unless you absolutely need to modify string literals.
 
 ---
 

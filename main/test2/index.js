@@ -1,6 +1,6 @@
 // HTVM Plugin: Keyword Expander - index.js
 
-console.log("HTVM Plugin 'Keyword Expander' has been loaded.");
+console.log("HTVM Plugin 'Keyword Expander2' has been loaded.");
 
 /**
  * This hook finds lines containing only the word 'hello2' and expands them

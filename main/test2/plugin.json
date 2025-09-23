@@ -1,0 +1,10 @@
+{
+  "name": "Test2 The Marketplace",
+  "version": "1.0.0",
+  "author": "TheMaster1127",
+  "description": "Expands the standalone keyword 'hello2' into a print statement.",
+  "main": "index.js",
+  "hooks": [
+    "htvm_hook1"
+  ]
+}

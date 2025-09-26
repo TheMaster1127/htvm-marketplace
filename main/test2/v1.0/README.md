@@ -32,5 +32,5 @@ You can install this plugin through the **Plugin Manager** in the HT-IDE.
 
 1.  Click on the `Plugin` button.
 2.  Navigate to the "Marketplace" tab.
-3.  Find "Test The Marketplace" plugin in the list and click "Install & Activate".
+3.  Find "Test2 The Marketplace" plugin in the list and click "Install & Activate".
 4.  The IDE will reload, and the plugin will be active.

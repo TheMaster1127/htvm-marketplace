@@ -26,18 +26,26 @@ Follow these steps to get your plugin added to the official marketplace.
     cd my-cool-plugin
     ```
 
-5.  **Create the Required Files:** Inside your plugin's folder, you **must** create two files:
-    *   `plugin.json` (The manifest that describes your plugin).
-    *   `index.js` (The JavaScript code for your plugin).
+5. **Create a Version Folder:** Inside your plugin’s folder, create a folder for your plugin version (e.g., `1.0.0`). Each version lives in its own folder.
 
-6.  **Commit and Push:** Add your new folder and files, commit them, and push them to your forked repository.
+   ```bash
+   mkdir 1.0.0
+   cd 1.0.0
+   ```
+
+6. **Create the Required Files:** Inside the version folder, you **must** create two files:
+
+   * `plugin.json` (The manifest that describes your plugin).
+   * `index.js` (The JavaScript code for your plugin).
+
+7.  **Commit and Push:** Add your new folder and files, commit them, and push them to your forked repository.
     ```bash
     git add .
     git commit -m "feat: Add My Cool Plugin"
     git push origin main
     ```
     
-7.  **Submit a Pull Request:** Go to your forked repository on GitHub. You will see a prompt to "Compare & pull request". Click it, describe your plugin, and submit the pull request. Once it is reviewed and approved, it will be merged and will appear in the HT-IDE marketplace for everyone.
+8.  **Submit a Pull Request:** Go to your forked repository on GitHub. You will see a prompt to "Compare & pull request". Click it, describe your plugin, and submit the pull request. Once it is reviewed and approved, it will be merged and will appear in the HT-IDE marketplace for everyone.
 
 ### Example `plugin.json`
 
@@ -220,6 +228,22 @@ The hooks are called in numerical order. Here is a detailed breakdown of each av
     *   **Returns:** A modified `string`.
     *   **Use Case:** The ultimate pre-processor. This hook can perform raw text replacements on the original file, including string content.
     *   **EXTREME WARNING:** This hook is incredibly powerful and dangerous. Logic here can easily break the compiler if it's not written carefully. It is highly recommended to use other hooks unless you absolutely need to modify string literals.
+
+* `htvm_hook12(code)` **[Code → Code]**
+
+  * **When:** Called at the very end of the `expressionParserTranspiler` function. At this stage, the HTVM engine has already parsed and converted expressions into their intermediate form. Your plugin sees the “post-processed” expressions before they’re fully locked in.
+
+  * **Plugin Developer Use Case:**
+
+    * **Custom Operators:** Define brand-new inline operators that HTVM itself doesn’t recognize (e.g., `a %% b` → customModulo(a, b)).
+    * **Expression Rewrites:** Convert shorthand or domain-specific math into expanded code (e.g., `deg(45)` → `(45 * Math.PI / 180)`).
+    * **Optimizations:** Collapse trivial math like `x + 0`, `y * 1`, or `!!z`.
+    * **Regex Power:** Perform large-scale transformations across every expression in the file (great for DSL-like plugins).
+    * **Safety Tools:** Wrap every division in a safe-division function to avoid runtime errors.
+    * **Experimentation:** Add things like “pipe” operators (`value |> func`) or inline macros.
+
+  * **Pro Tip:** Since this runs *after* HTVM has already structured the expressions, you don’t have to worry about breaking its parsing logic — but you **can** override and mutate it to add brand-new expression-level behavior that feels native to the language.
+
 
 ---
 

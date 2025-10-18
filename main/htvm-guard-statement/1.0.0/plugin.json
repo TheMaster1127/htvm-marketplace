@@ -1,0 +1,8 @@
+{
+  "name": "Guard Statement",
+  "version": "1.0.0",
+  "author": "TheMaster1127",
+  "description": "Adds a Swift-like 'guard' statement for cleaner early returns and validation. Syntax: guard <condition> else <action>",
+  "main": "index.js",
+  "hooks": ["htvm_hook1"]
+}

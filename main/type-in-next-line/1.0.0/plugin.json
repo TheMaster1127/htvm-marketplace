@@ -1,0 +1,8 @@
+{
+  "name": "Type on the next line",
+  "version": "1.0.0",
+  "author": "TheMaster1127",
+  "description": "You can put the type on the next line",
+  "main": "index.js",
+  "hooks": ["htvm_hook1"]
+}

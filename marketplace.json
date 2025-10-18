@@ -1,5 +1,16 @@
 [
   {
+    "id": "htvm-guard-statement",
+    "name": "Guard Statement",
+    "description": "Adds a Swift-like 'guard' statement for cleaner early returns and validation. Syntax: guard <condition> else <action>",
+    "author": "TheMaster1127",
+    "versions": {
+      "1.0.0": {
+        "folderName": "1.0.0"
+      }
+    }
+  },
+  {
     "id": "test",
     "name": "Test The Marketplace",
     "description": "Expands the standalone keyword 'hello' into a print statement.",

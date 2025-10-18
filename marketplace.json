@@ -31,5 +31,16 @@
         "folderName": "v1.0"
       }
     }
+  },
+  {
+    "id": "type-in-next-line",
+    "name": "Type on the next line",
+    "description": "You can put the type on the next line",
+    "author": "TheMaster1127",
+    "versions": {
+      "1.0.0": {
+        "folderName": "1.0.0"
+      }
+    }
   }
 ]

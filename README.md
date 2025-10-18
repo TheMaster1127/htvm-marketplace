@@ -4,6 +4,10 @@ This is the official community hub for discovering, sharing, and installing plug
 
 ---
 
+https://www.youtube.com/watch?v=F8meajXf2sY
+
+---
+
 ## How to Contribute a Plugin
 
 Follow these steps to get your plugin added to the official marketplace.

@@ -4,7 +4,11 @@ This is the official community hub for discovering, sharing, and installing plug
 
 ---
 
-https://www.youtube.com/watch?v=F8meajXf2sY
+### Official Video Tutorial
+
+Want a full walkthrough? Watch the official video tutorial on how to create, debug, and publish your own HTVM plugins from start to finish!
+
+[![Watch the HTVM Plugin Tutorial on YouTube](https://img.youtube.com/vi/F8meajXf2sY/maxresdefault.jpg)](https://www.youtube.com/watch?v=F8meajXf2sY)
 
 ---
 

@@ -105,8 +105,6 @@ The API consists of a series of "hooks"—globally available functions that the 
 
 **Plugin Error Handling:** If something goes wrong during transpilation, **blame the plugin first.** Disable your active plugin and try again. If the issue persists, then blame your code, then the HTVM engine. Hooks can introduce breaking changes, so be mindful.
 
-A YouTube video tutorial about this is coming soon!
-
 ### A Full Example: The Transformation Process
 
 To understand how hooks work, let's trace the "Keyword Expander" plugin from start to finish.

@@ -4,16 +4,6 @@ This is the official community hub for discovering, sharing, and installing plug
 
 ---
 
-### Official Video Tutorial
-
-Want a full walkthrough? Watch the official video tutorial on how to create, debug, and publish your own HTVM plugins from start to finish!
-
-https://www.youtube.com/watch?v=F8meajXf2sY
-
-[![Watch the HTVM Plugin Tutorial on YouTube](https://img.youtube.com/vi/F8meajXf2sY/maxresdefault.jpg)](https://www.youtube.com/watch?v=F8meajXf2sY)
-
----
-
 ## How to Contribute a Plugin
 
 Follow these steps to get your plugin added to the official marketplace.
